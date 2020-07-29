@@ -12,17 +12,14 @@ spec:
     - containerPort: 8080
     env:
     - name: MESSAGE
-      value: "hello-kube-node-port"
+      value: "hello-kube-load-balancer"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: hello-kube
 spec:
-  type: NodePort
   ports:
   - port: 8080
-    targetPort: 8080
-    nodePort: 30001
   selector:
     name: hello-kube
