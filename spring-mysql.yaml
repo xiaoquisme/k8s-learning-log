@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-demo-config
+  labels:
+    name: config-map-demo
+data:
+  DB_HOSTNAME: "10.96.87.117"
+  DB_PORT: "3306"
+  DB_DTATBASE: "learning"
+  DB_USERNAME: "root"
+  DB_PASSWORD: "admin"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-demo
+spec:
+  type: NodePort
+  ports:
+  - targetPort: 8080
+    port: 80
+  selector:
+    app: spring-demo-mysql-pod
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-demo-mysql-deployment
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: spring-demo-mysql-pod
+  template:
+    metadata:
+      labels: 
+        app: spring-demo-mysql-pod
+    spec:
+      containers:
+      - name: spring-demo-mysql
+        image: qulianqing/springdemo:2.0
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: spring-demo-config
