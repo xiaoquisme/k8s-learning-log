@@ -5,7 +5,7 @@ metadata:
   labels:
     name: config-map-demo
 data:
-  DB_HOSTNAME: "10.96.87.117"
+  DB_HOSTNAME: "http://mysql-service"
   DB_PORT: "3306"
   DB_DTATBASE: "learning"
   DB_USERNAME: "root"
@@ -15,7 +15,7 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: spring-demo
+  name: spring-mysql-demo
 spec:
   type: NodePort
   ports:
