@@ -44,6 +44,8 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/mysql
           name: mysql-volumn
+        - mountPath: /etc/mysql/conf.d
+          name: mysql-config-volume
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
@@ -55,4 +57,7 @@ spec:
         hostPath:
           path: /mysql
           type: DirectoryOrCreate
-        
+      - name: mysql-config-volume
+        hostPath:
+          path: /mysql-config
+          type: DirectoryOrCreate
